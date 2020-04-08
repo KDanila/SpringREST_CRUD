@@ -1,6 +1,8 @@
 package kdv.config;
 
 import lombok.var;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -11,6 +13,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
+@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 public class AppConfig implements WebMvcConfigurer {
     @Bean
     public ClassLoaderTemplateResolver templateResolver() {
