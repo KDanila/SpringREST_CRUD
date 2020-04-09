@@ -20,7 +20,6 @@ import java.util.Properties;
 @AllArgsConstructor
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
-@PropertySource(value = {"classpath:application.yml"})
 public class HiberanteConfiguration {
 
     private final Environment env;
@@ -59,7 +58,7 @@ public class HiberanteConfiguration {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan(new String[]{"ru.kdv.entity"});
+        sessionFactory.setPackagesToScan(new String[]{"kdv.entity"});
         sessionFactory.setHibernateProperties(getHibernateProperties());
         return sessionFactory;
     }
