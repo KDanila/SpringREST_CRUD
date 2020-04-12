@@ -1,12 +1,10 @@
 package kdv.controller;
 
 import kdv.entity.Customer;
+import kdv.error.CustomerNotFoundException;
 import kdv.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +24,34 @@ public class CustomerRestController {
     }
 
     @GetMapping("/customer/{customerId}")
-    public Customer getCustomer(@PathVariable int customerId){
-        return customerService.getCustomer(customerId);
+    public Customer getCustomer(@PathVariable int customerId) {
+        Customer customer = customerService.getCustomer(customerId);
+        if (customer == null) {
+            throw new CustomerNotFoundException("Customer id not found -" + customerId);
+        }
+        return customer;
+    }
+
+    @PostMapping("/customer")
+    public Customer addCustomer(@RequestBody Customer customer) {
+        customer.setId(0);
+        customerService.saveCustomer(customer);
+        return customer;
+    }
+
+    @PutMapping("/customer")
+    public Customer updateCustomer(@RequestBody Customer customer) {
+        customerService.saveCustomer(customer);
+        return customer;
+    }
+
+    @DeleteMapping("/customer/{customerId}")
+    public String deleteCustomer(@PathVariable int customerId) {
+        Customer customer = customerService.getCustomer(customerId);
+        if (customer == null) {
+            throw new CustomerNotFoundException("Customer with id = " + customerId + " not found");
+        }
+        customerService.deleteCustomer(customerId);
+        return "Customer with id = " + customerId + " was deleted";
     }
 }
