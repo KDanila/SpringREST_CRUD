@@ -2,6 +2,7 @@ server:
   port: 8090
   tomcat:
     additional-tld-skip-patterns: "*mchange-commons-java*.jar"
+
 spring:
   thymeleaf:
     enabled: true
@@ -10,6 +11,7 @@ spring:
     username: springstudent
     password: springstudent
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 jdbc:
   driver: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://localhost:3306/spring_security_demo_bcrypt?useSSL=false&useUnicode=true&serverTimezone=UTC
@@ -30,3 +32,15 @@ hibernate:
   show_sql: true
   packagesToScan: ru.kdv.entity
   current.session.context.class: org.springframework.orm.hibernate5.SpringSessionContext
+
+info:
+  app:
+    name: SpringRest_CRUD
+    description: SpringBoot aplication with hibernate
+    version: 1.0.1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#        exclude: health, info
