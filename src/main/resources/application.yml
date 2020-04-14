@@ -44,3 +44,5 @@ management:
       exposure:
         include: "*"
 #        exclude: health, info
+stub:
+  isEnabled: false
