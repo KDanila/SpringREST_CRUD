@@ -15,6 +15,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @Configuration
 @EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 public class AppConfig implements WebMvcConfigurer {
+
     @Bean
     public ClassLoaderTemplateResolver templateResolver() {
 
