@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -25,7 +24,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
     @Override
-    @Transactional
     public List<Customer> getCustomers() {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Customer> theQuery = currentSession.createQuery("from Customer order by lastName", Customer.class);
@@ -34,27 +32,24 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    @Transactional
-    public void saveCustomer(Customer theCustomer) {
+    public void saveCustomer(Customer customer) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.saveOrUpdate(theCustomer);
+        currentSession.saveOrUpdate(customer);
     }
 
     @Override
-    @Transactional
-    public Customer getCustomer(int theId) {
+    public Customer getCustomer(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Customer theCustomer = currentSession.get(Customer.class, theId);
+        Customer theCustomer = currentSession.get(Customer.class, id);
         return theCustomer;
     }
 
     @Override
-    @Transactional
-    public void deleteCustomer(int theId) {
+    public void deleteCustomer(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Query theQuery =
                 currentSession.createQuery("delete from Customer where id=:customerId");
-        theQuery.setParameter("customerId", theId);
+        theQuery.setParameter("customerId", id);
         theQuery.executeUpdate();
     }
 }
