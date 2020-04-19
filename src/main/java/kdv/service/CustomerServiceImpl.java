@@ -1,48 +1,53 @@
 package kdv.service;
 
-import java.util.List;
-
-import kdv.dao.CustomerDAO;
 import kdv.entity.Customer;
+import kdv.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
 
-    private final CustomerDAO customerDAO;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerServiceImpl(@Qualifier("customerJpaDAOImpl") CustomerDAO customerDAO) {
-        this.customerDAO = customerDAO;
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     @Override
     @Transactional
     public List<Customer> getCustomers() {
-        return customerDAO.getCustomers();
+        return customerRepository.findAll();
     }
 
     @Override
     @Transactional
     public void saveCustomer(Customer customer) {
-        customerDAO.saveCustomer(customer);
+        customerRepository.save(customer);
     }
 
     @Override
     @Transactional
-    public Customer getCustomer(int id) {
-        return customerDAO.getCustomer(id);
+    public Customer getCustomer(Long id) {
+        Optional<Customer> result = customerRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new RuntimeException("Didn't find customer with id = " + id);
+        }
     }
 
     @Override
     @Transactional
-    public void deleteCustomer(int id) {
-        customerDAO.deleteCustomer(id);
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
     }
 }
 
