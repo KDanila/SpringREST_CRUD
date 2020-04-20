@@ -1,3 +1,4 @@
+/*
 package kdv.controller;
 
 import kdv.entity.Customer;
@@ -55,3 +56,4 @@ public class CustomerRestController {
         return "Customer with id = " + customerId + " was deleted";
     }
 }
+*/

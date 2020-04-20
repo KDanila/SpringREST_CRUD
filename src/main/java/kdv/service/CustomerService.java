@@ -1,3 +1,4 @@
+/*
 package kdv.service;
 
 import kdv.entity.Customer;
@@ -16,3 +17,4 @@ public interface CustomerService {
     void deleteCustomer(Long id);
 
 }
+*/
